@@ -37,8 +37,9 @@ public class ServletUtils {
         context.addServlet(new ServletHolder(new QueryServlet()), "/query");
         log.info("added QueryServlet");
 
+
         server.start();
-        server.join();
         log.info("servlet started successfully");
+        server.join();
     }
 }

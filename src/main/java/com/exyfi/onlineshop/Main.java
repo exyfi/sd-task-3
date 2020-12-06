@@ -1,24 +1,22 @@
 package com.exyfi.onlineshop;
 
-import com.exyfi.onlineshop.servlet.AddProductServlet;
-import com.exyfi.onlineshop.servlet.QueryServlet;
 import com.exyfi.onlineshop.utils.DbUtils;
 import com.exyfi.onlineshop.utils.ServletUtils;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
-import com.exyfi.onlineshop.servlet.GetProductsServlet;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import org.eclipse.jetty.util.log.Log;
+import org.eclipse.jetty.util.log.Logger;
 
 /**
- * @author exyfi.
+ * Product online shop application.
  */
 public class Main {
-    public static void main(String[] args) throws Exception {
-        DbUtils.initDb();
-        ServletUtils.startServlet();
+    private static final Logger log = Log.getLogger(Main.class.getName());
+
+    public static void main(String[] args) {
+        try {
+            DbUtils.initDb();
+            ServletUtils.startServlet();
+        } catch (Exception e) {
+            log.warn("Application start failed", e);
+        }
     }
 }
