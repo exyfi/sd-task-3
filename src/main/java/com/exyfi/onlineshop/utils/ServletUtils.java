@@ -9,7 +9,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 
 public class ServletUtils {
 
-    public static void startServlet(){
+    public static void startServlet() throws Exception {
         Server server = new Server(8081);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -19,5 +19,8 @@ public class ServletUtils {
         context.addServlet(new ServletHolder(new AddProductServlet()), "/add-product");
         context.addServlet(new ServletHolder(new GetProductsServlet()), "/get-products");
         context.addServlet(new ServletHolder(new QueryServlet()), "/query");
+
+        server.start();
+        server.join();
     }
 }
