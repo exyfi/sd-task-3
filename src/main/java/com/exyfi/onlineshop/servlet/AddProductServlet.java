@@ -2,6 +2,7 @@ package com.exyfi.onlineshop.servlet;
 
 import com.exyfi.onlineshop.dao.DbProductQueryService;
 import com.exyfi.onlineshop.dao.model.Product;
+import com.exyfi.onlineshop.utils.HtmlResponseUtils;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,13 +23,23 @@ public class AddProductServlet extends AbstractProductServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String name = request.getParameter("name");
-        long price = Long.parseLong(request.getParameter("price"));
+        String productName = request.getParameter("name");
+        String productPrice = request.getParameter("price");
+        long price;
 
-        dbProductQueryService.addProduct(new Product(name, price));
+        if (productName == null || productPrice == null) {
+            HtmlResponseUtils.writeBadRequestResponse(response, "Product name and price required");
+            return;
+        }
+        try {
+            price = Long.parseLong(request.getParameter("price"));
+        } catch (NumberFormatException e) {
+            HtmlResponseUtils.writeBadRequestResponse(response, "Price must be digit");
+            return;
+        }
 
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.getWriter().println("OK");
+        dbProductQueryService.addProduct(new Product(productName, price));
+
+        HtmlResponseUtils.writeResponse(response, "OK");
     }
 }

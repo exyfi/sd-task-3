@@ -13,6 +13,8 @@ import java.util.Optional;
 
 public class DbProductQueryService {
 
+    private static final String DB_URL = "jdbc:sqlite:test.db";
+
     private static final String ADD_PRODUCT_SQL_QUERY = "INSERT INTO PRODUCT (NAME, PRICE) VALUES (\"%s\",%s)";
     private static final String GET_PRODUCTS_SQL_QUERY = "SELECT * FROM PRODUCT";
     private static final String GET_MAX_PRICE_PRODUCT_SQL_QUERY = "SELECT * FROM PRODUCT ORDER BY PRICE DESC LIMIT 1";
@@ -71,7 +73,7 @@ public class DbProductQueryService {
 
     private void executeUpdateQuery(final String query) {
         try {
-            try (Connection c = DriverManager.getConnection("jdbc:sqlite:test.db")) {
+            try (Connection c = DriverManager.getConnection(DB_URL)) {
                 Statement stmt = c.createStatement();
                 stmt.executeUpdate(query);
                 stmt.close();

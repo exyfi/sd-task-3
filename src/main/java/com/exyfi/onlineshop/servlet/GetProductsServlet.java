@@ -2,6 +2,7 @@ package com.exyfi.onlineshop.servlet;
 
 import com.exyfi.onlineshop.dao.DbProductQueryService;
 import com.exyfi.onlineshop.dao.model.Product;
+import com.exyfi.onlineshop.utils.HtmlResponseUtils;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +28,9 @@ public class GetProductsServlet extends AbstractProductServlet {
         try {
             List<Product> products = dbProductQueryService.getProducts();
 
-            response.getWriter().println("<html><body>");
-            for (Product product : products) {
-                response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
-            }
-            response.getWriter().println("</body></html>");
+            HtmlResponseUtils.writeResponse(response, products);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
 }

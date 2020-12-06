@@ -2,6 +2,8 @@ package com.exyfi.onlineshop.servlet;
 
 import com.exyfi.onlineshop.dao.DbProductQueryService;
 import com.exyfi.onlineshop.dao.model.Product;
+import com.exyfi.onlineshop.exceptions.ProductShopException;
+import com.exyfi.onlineshop.utils.HtmlResponseUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,66 +22,31 @@ public class QueryServlet extends AbstractProductServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String command = request.getParameter("command");
 
-        if ("max".equals(command)) {
-            try {
+        try {
+
+            if ("max".equals(command)) {
                 Optional<Product> maxPriceProduct = dbProductQueryService.getMaxPriceProduct();
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("<h1>Product with max price: </h1>");
 
-                if (maxPriceProduct.isPresent()) {
-                    Product product = maxPriceProduct.get();
-                    response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
-                }
-                response.getWriter().println("</body></html>");
-
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else if ("min".equals(command)) {
-            try {
+                HtmlResponseUtils.writeResponse(response, "<h1>Product with max price: </h1>", maxPriceProduct);
+            } else if ("min".equals(command)) {
                 Optional<Product> minPriceProduct = dbProductQueryService.getMinPriceProduct();
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("<h1>Product with min price: </h1>");
-                if (minPriceProduct.isPresent()) {
-                    Product product = minPriceProduct.get();
-                    response.getWriter().println(product.getName() + "\t" + product.getPrice() + "</br>");
-                }
 
-                response.getWriter().println("</body></html>");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else if ("sum".equals(command)) {
-            try {
+                HtmlResponseUtils.writeResponse(response, "<h1>Product with min price: </h1>", minPriceProduct);
+            } else if ("sum".equals(command)) {
                 long sum = dbProductQueryService.getProductPriceSum();
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("Summary price: ");
 
-                response.getWriter().println(sum);
-
-                response.getWriter().println("</body></html>");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        } else if ("count".equals(command)) {
-            try {
-
+                HtmlResponseUtils.writeResponse(response, "Summary price: ", String.valueOf(sum));
+            } else if ("count".equals(command)) {
                 int count = dbProductQueryService.getProductsCount();
-                response.getWriter().println("<html><body>");
-                response.getWriter().println("Number of products: ");
 
-                response.getWriter().println(count);
-
-                response.getWriter().println("</body></html>");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+                HtmlResponseUtils.writeResponse(response, "Number of products: ", String.valueOf(count));
+            } else {
+                HtmlResponseUtils.writeBadRequestResponse(response, "Unknown command: " + command);
             }
-        } else {
-            response.getWriter().println("Unknown command: " + command);
+        } catch (Exception e) {
+            HtmlResponseUtils.writeInternalServiceErrorResponse(response, "INTERNAL SERVICE ERROR OCCURRED. PLEASE TRY USE THIS APP LATER");
+            throw new ProductShopException("Internal service error occurred", e);
         }
 
-        response.setContentType("text/html");
-        response.setStatus(HttpServletResponse.SC_OK);
     }
-
 }

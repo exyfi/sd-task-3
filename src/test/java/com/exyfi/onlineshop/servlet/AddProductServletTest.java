@@ -48,4 +48,39 @@ class AddProductServletTest {
 
         assertEquals(stringWriter.toString(), "OK" + System.lineSeparator());
     }
+
+    @Test
+    public void testIncorrectAddProductQueryIncorrectPrice() throws IOException {
+        when(request.getParameter("name")).thenReturn("testproduct");
+        when(request.getParameter("price")).thenReturn("fadsdsda");
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(printer);
+
+        addProductServlet.doGet(request, response);
+        printer.flush();
+
+        final String expected = "Price must be digit\n";
+
+        assertEquals(stringWriter.toString(), expected);
+    }
+
+
+    @Test
+    public void testIncorrectAddProductQueryNullInput() throws IOException {
+        when(request.getParameter("name")).thenReturn(null);
+        when(request.getParameter("price")).thenReturn(null);
+
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printer = new PrintWriter(stringWriter);
+        when(response.getWriter()).thenReturn(printer);
+
+        addProductServlet.doGet(request, response);
+        printer.flush();
+
+        final String expected = "Product name and price required\n";
+
+        assertEquals(stringWriter.toString(), expected);
+    }
 }
