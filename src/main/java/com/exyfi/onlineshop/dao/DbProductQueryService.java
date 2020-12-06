@@ -6,10 +6,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
-public class DbProductRequestService {
+public class DbProductQueryService {
 
     private static final String ADD_PRODUCT_SQL_QUERY = "INSERT INTO PRODUCT " +
-            "(NAME, PRICE) VALUES (%s,%s)";
+            "(NAME, PRICE) VALUES (\"%s\",%s)";
 
     public void addProduct(Product productItem) {
         final String sqlQuery = String.format(ADD_PRODUCT_SQL_QUERY, productItem.getName(), productItem.getPrice());

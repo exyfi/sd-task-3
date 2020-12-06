@@ -1,5 +1,6 @@
 package com.exyfi.onlineshop.utils;
 
+import com.exyfi.onlineshop.dao.DbProductQueryService;
 import com.exyfi.onlineshop.servlet.AddProductServlet;
 import com.exyfi.onlineshop.servlet.GetProductsServlet;
 import com.exyfi.onlineshop.servlet.QueryServlet;
@@ -30,7 +31,7 @@ public class ServletUtils {
         context.setContextPath("/");
         server.setHandler(context);
 
-        context.addServlet(new ServletHolder(new AddProductServlet()), "/add-product");
+        context.addServlet(new ServletHolder(new AddProductServlet(new DbProductQueryService())), "/add-product");
         log.info("added AddProductServlet");
         context.addServlet(new ServletHolder(new GetProductsServlet()), "/get-products");
         log.info("added GetProductsServlet");
