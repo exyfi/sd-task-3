@@ -25,13 +25,13 @@ public class HtmlResponseUtils {
         return sb.toString();
     };
 
-    public static void writeResponse(HttpServletResponse response, List<Product> productList) throws IOException {
+    public static void writeSuccessResponse(HttpServletResponse response, List<Product> productList) throws IOException {
         final String responseBody = HTML_RESPONSE_PATTERN.apply(PRODUCTS_TO_HTML_VIEW.apply(productList));
 
         writeResponse(response, HttpServletResponse.SC_OK, responseBody);
     }
 
-    public static void writeResponse(HttpServletResponse response, String operationName, String operationValue) throws IOException {
+    public static void writeSuccessResponse(HttpServletResponse response, String operationName, String operationValue) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append(operationName).append("\n");
         sb.append(operationValue);
@@ -41,7 +41,7 @@ public class HtmlResponseUtils {
         writeResponse(response, HttpServletResponse.SC_OK, responseBody);
     }
 
-    public static void writeResponse(HttpServletResponse response, String operationName, Optional<Product> product) throws IOException {
+    public static void writeSuccessResponse(HttpServletResponse response, String operationName, Optional<Product> product) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append(operationName).append("\n");
         product.ifPresent(i -> sb.append(i.getName()).append("\t").append(i.getPrice()).append("</br>"));
@@ -51,17 +51,16 @@ public class HtmlResponseUtils {
         writeResponse(response, HttpServletResponse.SC_OK, responseBody);
     }
 
+    public static void writeSuccessResponse(HttpServletResponse response, final String responseBody) throws IOException {
+        writeResponse(response, HttpServletResponse.SC_OK, responseBody);
+    }
+
     public static void writeBadRequestResponse(HttpServletResponse response, String errorDescription) throws IOException {
         writeResponse(response, HttpServletResponse.SC_BAD_REQUEST, errorDescription);
     }
 
     public static void writeInternalServiceErrorResponse(HttpServletResponse response, String errorDesc) throws IOException {
         writeResponse(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, errorDesc);
-    }
-
-
-    public static void writeResponse(HttpServletResponse response, final String responseBody) throws IOException {
-        writeResponse(response, HttpServletResponse.SC_OK, responseBody);
     }
 
     private static void writeResponse(HttpServletResponse response, int statusCode, String responseBody) throws IOException {
