@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 
 public class AbstractProductServlet extends HttpServlet {
 
-    final DbProductQueryService dbProductQueryService;
+    protected final DbProductQueryService dbProductQueryService;
 
     AbstractProductServlet(DbProductQueryService dbProductQueryService) {
         this.dbProductQueryService = dbProductQueryService;

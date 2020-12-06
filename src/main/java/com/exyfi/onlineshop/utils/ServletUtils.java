@@ -37,7 +37,7 @@ public class ServletUtils {
         log.info("added AddProductServlet");
         context.addServlet(new ServletHolder(new GetProductsServlet(dbProductQueryService)), "/get-products");
         log.info("added GetProductsServlet");
-        context.addServlet(new ServletHolder(new QueryServlet()), "/query");
+        context.addServlet(new ServletHolder(new QueryServlet(dbProductQueryService)), "/query");
         log.info("added QueryServlet");
 
 
