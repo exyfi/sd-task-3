@@ -37,7 +37,7 @@ public class QueryServlet extends AbstractProductServlet {
 
                 HtmlResponseUtils.writeResponse(response, "Summary price: ", String.valueOf(sum));
             } else if ("count".equals(command)) {
-                int count = dbProductQueryService.getProductsCount();
+                long count = dbProductQueryService.getProductsCount();
 
                 HtmlResponseUtils.writeResponse(response, "Number of products: ", String.valueOf(count));
             } else {

@@ -8,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
 /**
  * Class provides init configuration DB for this app.
  */

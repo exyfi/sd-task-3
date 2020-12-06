@@ -105,7 +105,7 @@ class QueryServletTest {
         StringWriter stringWriter = new StringWriter();
         PrintWriter printer = new PrintWriter(stringWriter);
         when(request.getParameter("command")).thenReturn("count");
-        when(queryService.getProductsCount()).thenReturn(100);
+        when(queryService.getProductsCount()).thenReturn(100L);
         when(response.getWriter())
                 .thenReturn(printer);
 
