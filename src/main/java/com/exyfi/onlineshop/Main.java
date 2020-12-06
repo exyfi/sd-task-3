@@ -12,7 +12,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 /**
- * @author akirakozov
+ * @author exyfi.
  */
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -34,8 +34,8 @@ public class Main {
         server.setHandler(context);
 
         context.addServlet(new ServletHolder(new AddProductServlet()), "/add-product");
-        context.addServlet(new ServletHolder(new GetProductsServlet()),"/get-products");
-        context.addServlet(new ServletHolder(new QueryServlet()),"/query");
+        context.addServlet(new ServletHolder(new GetProductsServlet()), "/get-products");
+        context.addServlet(new ServletHolder(new QueryServlet()), "/query");
 
         server.start();
         server.join();
