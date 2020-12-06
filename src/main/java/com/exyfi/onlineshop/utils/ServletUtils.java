@@ -31,9 +31,11 @@ public class ServletUtils {
         context.setContextPath("/");
         server.setHandler(context);
 
-        context.addServlet(new ServletHolder(new AddProductServlet(new DbProductQueryService())), "/add-product");
+        DbProductQueryService dbProductQueryService = new DbProductQueryService();
+
+        context.addServlet(new ServletHolder(new AddProductServlet(dbProductQueryService)), "/add-product");
         log.info("added AddProductServlet");
-        context.addServlet(new ServletHolder(new GetProductsServlet()), "/get-products");
+        context.addServlet(new ServletHolder(new GetProductsServlet(dbProductQueryService)), "/get-products");
         log.info("added GetProductsServlet");
         context.addServlet(new ServletHolder(new QueryServlet()), "/query");
         log.info("added QueryServlet");

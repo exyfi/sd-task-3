@@ -8,12 +8,12 @@ public class Product {
     /**
      * Product name.
      */
-    private String name;
+    private final String name;
 
     /**
      * Product price.
      */
-    private Long price;
+    private final Long price;
 
     public Product(final String name, long price) {
         this.name = name;

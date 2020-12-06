@@ -1,7 +1,6 @@
 package com.exyfi.onlineshop.servlet;
 
 import com.exyfi.onlineshop.dao.DbProductQueryService;
-import com.exyfi.onlineshop.dao.model.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
